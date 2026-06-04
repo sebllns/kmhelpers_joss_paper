@@ -44,7 +44,7 @@ covering every stage of the $k$-mer index lifecycle:
   generation of ready-to-execute pipeline scripts (`plan`),
 - index building from definition files (`apply`),
 - sequence querying (`query`),
-- ZSTD-based index (block) compression (`compress`),
+- ZSTD-based index (block) compression (`compress`) [@regnier2026],
 - registry management (`registry`).
 
 Multi-step workflows can be described as declarative YAML pipelines
