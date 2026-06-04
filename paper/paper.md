@@ -30,9 +30,9 @@ bioinformatics [REFSTODO]. A family of scalable methods uses Bloom filters (BF) 
 Those steps require expertise, and any error at any stage can invalidate downstream results and waste significant
 computation time. 
 
-[//]: # $k$-mer indexes built on Bloom filters allow efficient querying of large sequence collections. However, building and managing such indexes in practice involve a complex chain of steps. 
+$--  # $k$-mer indexes built on Bloom filters allow efficient querying of large sequence collections. However, building and managing such indexes in practice involve a complex chain of steps. 
 
-[//]: # such as those produced by `kmindex` [@lemane2024], : enumerating sample files, counting $k$-mers, selecting appropriate Bloom-filter parameters,
+$--  # such as those produced by `kmindex` [@lemane2024], : enumerating sample files, counting $k$-mers, selecting appropriate Bloom-filter parameters,
 generating index definitions, orchestrating build jobs, and compressing outputs for long-term storage. Each step requires expertise, and errors at any stage can invalidate downstream results and waste significant computation time.
 
 We propose `kmhelpers`, an open-source Python toolkit that automates this entire workflow for building (and querying) indexes created using `kmindex` [@lemane2024]. `kmhelpers` provides both a command-line interface (CLI) and a Python API, covering every stage of the $k$-mer index lifecycle.
@@ -57,11 +57,25 @@ Multi-step workflows can be described as declarative YAML pipelines
 
 $k$-mer based sequence databases built with tools like `kmindex` and `kmtricks`
 [@lemane2022] are used to address large-scale questions in
-genomics, metagenomics, and population studies. However, the gap between having
-the raw indexing software and running a reproducible, end-to-end indexing
-workflow is significant. Researchers face recurring pain points:
+genomics, metagenomics, and population studies. FOr instance, those tools were recently used to index 50 petabases of raw sequencing data [@ls]. However, the gap between having the raw indexing software and running a reproducible, end-to-end optimized indexing workflow is significant, and reserved to specialists. 
 
-**Build steps**
+The work we propose in this work, `kmhelpers` aims to popularize and make accessible the process of building or update a genomic search engine from a raw set of data. This opens the doors for non-specialists to the creation and maintainability of private (such as in hospitals) or shared indexes (that can be registered in larger search engines).
+
+Formally, the input is a set $\mathcal{S}={S_1, \dots, S_n}$ of $n$ genomic samples of various sizes. Each $S_i$ can be either a raw sequencing dataset or assembled sequences. The output is an index built using
+`kmindex`, subject to two main user-defined limits: (1) the maximum allowed false-positive rate, and (2) the maximum number of sub-indexes, each being a file storing a set of BFs as a matrix. 
+
+One needs to briefly explain the concept of sub-index. The main challenge arises from the fact that each BF size must be adapted to the number of items it contains. In the context of this work, a BF indexes all distinct $k$-mers of a sample $S_i$. Suppose first that all samples had the same number of distinct $k$-mers: all BFs would then have the same size and could be merged into a single matrix. In such a matrix, a column is a BF and a row is of length $n$, and it represents the presence (1) or absence (0)
+of a $k$-mer across all $n$ samples, assuming the same hash function is used for all BFs. This is the ideal situation, as only a single file needs to be accessed and opened at query time.
+
+In practice, sample sizes differ from one another. One solution would be to adapt the BF size to the largest sample. However, sample sizes can vary by several orders of magnitude, which would result in
+enormous storage overhead. The opposite extreme would involve creating one matrix per sample (each composed of a single column). This would be optimal in terms of storage, but would dramatically slow down the
+query process, as $n$ distinct files would need to be accessed for each queried $k$-mer.
+The solution we propose is a middle ground. The user defines the maximum number of sub-groups — hence the maximum number of matrices created — and, as shown in the pipeline below, kmhelpers automatically
+determines the BF size for each sub-index such that the total index size is minimised.
+
+PIERRE: STOP ICI
+The identified needs follow the following steps 
+`kmhelper` is a pipeline
 - sample discovery and $k$-mer counting (`list`),
 - Bloom-filter span profiling and grouping (`profile`),
 - index definition generation (`compose`),
@@ -83,15 +97,7 @@ distributions produced by `ntCard` [@mohamadi2017] and assigns each sample to
 the smallest span that keeps the false-positive rate below a user-defined
 threshold.
 
-**Workflow orchestration.** Building a large index may involve hundreds to millions of samples spread across multiple sub-indexes. Managing
-these build jobs manually is error-prone. `kmhelpers` introduces a declarative index definition format (YAML) and two complementary commands: `plan`, which validates sample files, available disk
-space and memory upfront and emits ready-to-execute pipeline scripts; and
-`apply`, which reads the definition files and runs the build, with support
-for span-level and name-level filtering.
 
-Together, these features make $k$-mer indexing workflows accessible to
-researchers who are not experts in the underlying data structures, while
-remaining flexible enough for large-scale production use.
 
 # State of the Field
 
@@ -126,12 +132,22 @@ against user-provided sequences and returns ranked results.](https://notes.inria
 
 [[TODO]]
 
-`kmhelpers` is implemented in Python (≥3.8) and distributed via Conda with
+`kmhelpers` is implemented in Python ($\geq 3.8$) and distributed via Conda with
 automatic installation of its bioinformatics dependencies (`kmindex`,
 `ntCard`). The CLI is built with Click [@click] and the package exposes a
 public Python API covering all CLI functionality. 
 
 
+
+**Workflow orchestration.** Building a large index may involve hundreds to millions of samples spread across multiple sub-indexes. Managing
+these build jobs manually is error-prone. `kmhelpers` introduces a declarative index definition format (YAML) and two complementary commands: `plan`, which validates sample files, available disk
+space and memory upfront and emits ready-to-execute pipeline scripts; and
+`apply`, which reads the definition files and runs the build, with support
+for span-level and name-level filtering.
+
+Together, these features make $k$-mer indexing workflows accessible to
+researchers who are not experts in the underlying data structures, while
+remaining flexible enough for large-scale production use.
 
 
 
