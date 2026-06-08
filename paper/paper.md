@@ -36,27 +36,27 @@ We propose `kmhelpers`, an open-source Python toolkit that automates the entire 
 $k$-mer based sequence databases built with tools like `kmindex` [@lemane2024] and `kmtricks` [@lemane2022] are used to address large-scale questions in
 genomics, metagenomics, and population studies. For instance, those tools were recently used to index 50 petabases of raw sequencing data [@ls]. However, the gap between having the raw indexing software and running a reproducible, end-to-end optimized indexing workflow is significant, and accessible only to specialists.
 
-`kmhelpers` aims to popularize and make accessible the complete process of building or updating a genomic search engine from raw data. This novel possibility opens the door for non-specialists to the creation and maintenance of private indexes (such as in hospitals or data producer centers) or shared indexes that can be registered in larger search engines.
+`kmhelpers` aims to popularize and make accessible the complete process of using `kmindex` for building or updating a genomic search engine from raw data. This novel possibility opens the door for non-specialists to the creation and maintenance of private indexes (such as in hospitals or data producer centers) or shared indexes that can be registered in larger search engines.
 
-The complete pipeline can be described as follows. First, determine the length of each sample (in terms of its number of distinct $k$-mers). Second, given a user-defined false positive rate, distribute input samples into distinct groups, each BF of a group having the same fixed size. The sizes of BF of groups have to be optimized to reduce the final whole index size. Third, given computational constraints, the whole construction is split into jobs, each generating sub-parts of the index, and a final step merges these sub-parts.
 
-Formally, the input is a set $\mathcal{S}={S_1, \dots, S_n}$ of $n$ genomic samples of various sizes. Each $S_i$ can be either a raw sequencing dataset or assembled sequences. The output is an index built using `kmindex`, subject to two main user-defined limits: (1) the maximum allowed false-positive rate, and (2) the maximum number of sub-indexes, each being a file storing a set of BFs as a matrix.
+Formally, the input is a set $\mathcal{S}={S_1, \dots, S_n}$ of $n$ genomic samples of various sizes. Each $S_i$ can be either a raw sequencing dataset or assembled sequences. The output is an index built using `kmindex`, subject to two main user-defined limits: (1) the maximum allowed false-positive rate, and (2) the maximum number of sub-indexes, each being a file storing a set of BFs as a matrix. `kmhelper` orchestrates all steps (described below) and automatize and simplify the parametrization and the data distribution. 
 
 ## Sub-indexes specific need
 
 One needs to briefly explain the concept of sub-index, whose construction and parametrisation can be painful for non-specialists.
-Any Bloom filter-based index compacts all BFs of the same size as a matrix in a single file. In such a matrix, a column is a BF and each row has length $n$, representing the presence (1) or absence (0) of a $k$-mer across all $n$ samples, assuming the same hash function is used for all BFs. Finally, a complete index of a set of samples is decomposed into distinct matrices — each being a sub-index — each storing all Bloom filters of the same size.
+Any Bloom filter-based index compacts all BFs of the same size as a (row-major) matrix in a single file. In such a matrix, a column is a BF and each row has length $n$, representing the presence (1) or absence (0) of a $k$-mer across all $n$ samples, assuming the same hash function is used for all BFs. Finally, a complete index of a set of samples is decomposed into distinct matrices — each being a sub-index — each storing all Bloom filters of the same size.
 
-The main challenge arises from the fact that each BF size must be adapted to the number of items it contains. In the context of this work, a BF indexes all distinct $k$-mers of a sample $S_i$. Suppose first that all samples possess the same number of distinct $k$-mers: all BFs would then have the same size and could be merged into a single matrix. This is the ideal situation, as only a single file needs to be accessed and opened at query time.
+The main challenge arises from the fact that each BF size must be adapted to the number of items it contains. In the context of this work, a BF indexes all distinct $k$-mers from a sample $S_i$. Suppose first that all samples possess the same number of distinct $k$-mers: all BFs would then have the same size and could be merged into a single matrix. This is the ideal situation, as only a single file needs to be accessed and opened at query time, and a row of this matrix directly provide the presence/absence of a queried $k$-mer in the $n$ indexed samples.
 
-In practice, sample sizes differ from one another. One solution would be to adapt the BF size to the largest sample. However, sample sizes can vary by several orders of magnitude, which would result in
-enormous storage overhead. The opposite extreme would involve creating one matrix per sample (each composed of a single column). This would be optimal in terms of storage, but would dramatically slow down the
+In practice, sample sizes differ from one another. One solution would be to adapt the BF size to the largest sample. However, sample sizes can vary by several orders of magnitude, which would result in enormous storage overhead. The opposite extreme would involve creating one matrix per sample (each composed of a single column). This would be optimal in terms of storage size, but would dramatically slow down the
 query process, as $n$ (can be at the scale of several millions) distinct files would need to be accessed for each queried $k$-mer.
 The solution we propose is a middle ground. The user defines the maximum number of sub-groups — hence the maximum number of matrices created — and, as shown in the pipeline below, kmhelpers automatically
 determines the BF size for each sub-index such that the total index size is minimised.
 
 ## Whole pipeline needs
-The identified needs follow the following steps, that are automatically processed by the `kmhelper` pipeline.
+
+Let us now take a step back and look at the entire pipeline, automatically processed by the `kmhelper` pipeline.
+The identified needs follow the following steps:
 
 - Sample discovery and $k$-mer counting (`list`). This step recursively lists all samples from a given directory and  counts the $k$-mers of each datasets using `ntCard` [@mohamadi2017] (unless these number are provided by the user).
 - Bloom-filter sub-indexes sizes profiling (`profile`). This step determines the best set of sizes of sub-indexes to built, given a maximal number of them, provided by the user.
@@ -121,6 +121,8 @@ Together, these features make $k$-mer indexing workflows accessible to
 researchers who are not experts in the underlying data structures, while
 remaining flexible enough for large-scale production use.
 
+# ToL ? 
+
 # Acknowledgements
 
 The authors thank Téo Lemane for developing `kmindex` and for his
@@ -168,4 +170,11 @@ either excessive storage consumption or unacceptably high false-positive rates.
 distributions produced by `ntCard` [@mohamadi2017] and assigns each sample to
 the smallest span that keeps the false-positive rate below a user-defined
 threshold.
+
+
+
+
+The complete pipeline can be described as follows. First, determine the length of each sample (in terms of its number of distinct $k$-mers). Second, given a user-defined false positive rate, distribute input samples into distinct groups, each BF of a group having the same fixed size. The sizes of BF of groups have to be optimized to reduce the final whole index size. Third, given computational constraints, the whole construction is split into jobs, each generating sub-parts of the index, and a final step merges these sub-parts.
+
+
 # References
