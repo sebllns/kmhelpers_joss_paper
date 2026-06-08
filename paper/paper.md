@@ -104,7 +104,7 @@ committing to the build. `apply` reads the definition files and invokes
 `kmindex` to construct the index. Finally, `query` searches the built index
 against user-provided sequences and returns ranked results.](https://notes.inria.fr/uploads/upload_77e9b33f96768c32594e124ee44b0382.png)
 
-[[TODO]]
+#todo: ajouter la mise à jour d'un index, à la fois dans la figure et dans l'outil. 
 
 `kmhelpers` is implemented in Python ($\geq 3.8$) and distributed via Conda with
 automatic installation of its bioinformatics dependencies (`kmindex`,
@@ -115,13 +115,17 @@ public Python API covering all CLI functionality.
 these build jobs manually is error-prone. `kmhelpers` introduces a declarative index definition format (YAML) and two complementary commands: `plan`, which validates sample files, available disk
 space and memory upfront and emits ready-to-execute pipeline scripts; and
 `apply`, which reads the definition files and runs the build, with support
-for span-level and name-level filtering.
+for span-level and name-level filtering. [#Commentaire Pierre : quelles sont les nouvelles infos que tu souhaites faire passer ici. Ne faut il pas une bonne fois pour toute développer les étapes (dans *Whole pipeline needs*), et ne pas revenir dessus ?]
 
 Together, these features make $k$-mer indexing workflows accessible to
 researchers who are not experts in the underlying data structures, while
 remaining flexible enough for large-scale production use.
 
 # ToL ? 
+#TODO
+
+# Availability and documentation
+#TODO
 
 # Acknowledgements
 
