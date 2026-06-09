@@ -161,9 +161,7 @@ committing to the build. `apply` reads the definition files and invokes
 `kmindex` to construct the index. Finally, `query` searches the built index
 against user-provided sequences and returns ranked results.](https://notes.inria.fr/uploads/upload_77e9b33f96768c32594e124ee44b0382.png)
 
-<!-- TODO before submission: update the figure to also show index update,
-and commit the final figure as a local file in the repository (JOSS requires
-figures committed to the repo, not referenced via an external URL). -->
+<!-- TODO before submission: update the figure to also show index update, and commit the final figure as a local file in the repository (JOSS requires figures committed to the repo, not referenced via an external URL). -->
 
 ## Implementation
 
@@ -178,17 +176,15 @@ while remaining flexible enough for large-scale production use.
 
 # Tree of Life demonstration
 
-<!-- TODO: real-world demonstration pending experimental results. Required
+TODO real-world demonstration pending experimental results. Required
 content when results arrive: dataset description (number of samples, total
 size), hardware used, index parameters chosen automatically by kmhelpers,
-output index size, build wall time, and query throughput. -->
+output index size, build wall time, and query throughput.
 
 
 # Availability and documentation
 
-`kmhelpers` is released under the GNU General Public License v3.0 and is available
-at <https://gitlab.inria.fr/omicfinder/kmhelpers>. The full documentation is
-available at XXX.
+`kmhelpers` is released under the GNU General Public License v3.0 and is available at <https://gitlab.inria.fr/omicfinder/kmhelpers>. The full documentation is available at XXX.
 
 
 # Acknowledgements
@@ -198,7 +194,7 @@ responsiveness in addressing feature requests and issues raised during the
 development of `kmhelpers`. We acknowledge the GenOuest core facility
 (<https://www.genouest.org>) for providing the computing infrastructure.
 The work was funded by the Inria Challenge "OmicFinder"
-(<https://project.inria.fr/omicfinder/>).
+(<https://project.inria.fr/omicfinder/>), and by the state funding managed by the French National Research Agency under the France 2030 program [ANR-22-PEAE-0005].
 
 
 # AI Usage Disclosure
