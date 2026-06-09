@@ -25,7 +25,7 @@ bibliography: paper.bib
 # Summary
 
 Large-scale genomic sequence search has become a central problem in modern
-bioinformatics [@marchet2024; @karasikov2024]. A widely used family of methods
+bioinformatics [@marchet2024; @karasikov2025]. A widely used family of methods
 relies on Bloom filters (BF) [@bloom] to record, for each indexed sample, which
 $k$-mers (words of length $k$) it contains; a query then reports the set of
 samples containing each queried $k$-mer. Building such an index over many samples
@@ -85,7 +85,7 @@ structures. BIGSI [@bradley2019] and COBS [@bingmann2019] use compressed Bloom
 filter matrices to answer presence/absence queries across collections of
 sequencing experiments. HowDeSBT [@harris2019] and Mantis [@pandey2018] rely on
 sequence Bloom trees and counting quotient filters, respectively. More recent
-colored-$k$-mer indexes such as MetaGraph [@karasikov2024] and Fulgor [@fulgor]
+colored-$k$-mer indexes such as MetaGraph [@karasikov2025] and Fulgor [@fulgor]
 push scalability further; see [@marchet2024] for a survey. `kmindex`, which
 `kmhelpers` wraps, builds on the `kmtricks` [@lemane2022] counting pipeline and
 is designed for efficient querying of large sequence collections.

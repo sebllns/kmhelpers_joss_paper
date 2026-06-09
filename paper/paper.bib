@@ -1,39 +1,45 @@
 @article{lemane2024,
-  author  = {Lemane, T{\'e}o and others},
+  author  = {Lemane, T{\'e}o and Lezzoche, Nolan and Lecubin, Julien and
+             Pelletier, Eric and Lescot, Magali and Chikhi, Rayan and
+             Peterlongo, Pierre},
   title   = {Indexing and real-time user-friendly queries in terabyte-sized
-             complex genomic datasets with kmindex and {ORA}},
+             complex genomic datasets with {kmindex} and {ORA}},
   journal = {Nature Computational Science},
   year    = {2024},
   volume  = {4},
   number  = {2},
   pages   = {104--109},
-  doi     = {10.1101/2023.05.31.543043},
-  url     = {https://github.com/tlemane/kmindex}
+  doi     = {10.1038/s43588-024-00596-6}
 }
 
 @article{lemane2022,
-  author  = {Lemane, Téo and Medvedev, Paul and Chikhi, Rayan and Peterlongo, Pierre},
-  title   = {kmtricks: Efficient and flexible construction of {Bloom} filters for large sequencing data collections},
-  journal = {GigaScience},
+  author  = {Lemane, T{\'e}o and Medvedev, Paul and Chikhi, Rayan and
+             Peterlongo, Pierre},
+  title   = {kmtricks: efficient and flexible construction of {Bloom} filters
+             for large sequencing data collections},
+  journal = {Bioinformatics Advances},
   year    = {2022},
-  volume  = {11},
-  pages   = {giac029},
-  doi     = {10.1093/gigascience/giac029}
+  volume  = {2},
+  number  = {1},
+  pages   = {vbac029},
+  doi     = {10.1093/bioadv/vbac029}
 }
 
 @article{mohamadi2017,
   author  = {Mohamadi, Hamid and Khan, Hamza and Birol, Inanc},
-  title   = {ntCard: a streaming algorithm for cardinality estimation in genomics data},
+  title   = {ntCard: a streaming algorithm for cardinality estimation in
+             genomics data},
   journal = {Bioinformatics},
   year    = {2017},
   volume  = {33},
   number  = {9},
-  pages   = {1324--1325},
+  pages   = {1324--1330},
   doi     = {10.1093/bioinformatics/btw832}
 }
 
 @article{bradley2019,
-  author  = {Bradley, Phelim and Den Bakker, Henk C. and Rocha, Eduardo P. C. and McVean, Gil and Iqbal, Zamin},
+  author  = {Bradley, Phelim and den Bakker, Henk C. and Rocha, Eduardo P. C.
+             and McVean, Gil and Iqbal, Zamin},
   title   = {Ultrafast search of all deposited bacterial and viral genomic data},
   journal = {Nature Biotechnology},
   year    = {2019},
@@ -44,8 +50,9 @@
 }
 
 @inproceedings{bingmann2019,
-  author    = {Bingmann, Timo and Bradley, Phelim and Gauger, Florian and Iqbal, Zamin},
-  title     = {{COBS}: A compact bit-sliced signature index},
+  author    = {Bingmann, Timo and Bradley, Phelim and Gauger, Florian and
+               Iqbal, Zamin},
+  title     = {{COBS}: A Compact Bit-Sliced Signature Index},
   booktitle = {String Processing and Information Retrieval (SPIRE 2019)},
   year      = {2019},
   doi       = {10.1007/978-3-030-32686-9_21}
@@ -63,25 +70,15 @@
 }
 
 @article{pandey2018,
-  author  = {Pandey, Prashant and Almodaresi, Fatemeh and Bender, Michael A. and Ferdman, Michael and Johnson, Rob and Patro, Rob},
-  title   = {Mantis: A fast, small, and exact large-scale sequence-search index},
+  author  = {Pandey, Prashant and Almodaresi, Fatemeh and Bender, Michael A.
+             and Ferdman, Michael and Johnson, Rob and Patro, Rob},
+  title   = {Mantis: A Fast, Small, and Exact Large-Scale Sequence-Search Index},
   journal = {Cell Systems},
   year    = {2018},
   volume  = {7},
   number  = {2},
   pages   = {201--207.e4},
   doi     = {10.1016/j.cels.2018.05.021}
-}
-
-@article{koster2012,
-  author  = {K{\"o}ster, Johannes and Rahmann, Sven},
-  title   = {Snakemake---a scalable bioinformatics workflow engine},
-  journal = {Bioinformatics},
-  year    = {2012},
-  volume  = {28},
-  number  = {19},
-  pages   = {2520--2522},
-  doi     = {10.1093/bioinformatics/bts480}
 }
 
 @software{click,
@@ -91,30 +88,34 @@
   year    = {2023}
 }
 
-@software{zstandard,
-  author  = {Collet, Yann and {Facebook, Inc.}},
-  title   = {Zstandard --- Fast real-time compression algorithm},
-  url     = {https://github.com/facebook/zstd},
-  year    = {2016}
-}
-
 @article{bloom,
-  title={Space/time trade-offs in hash coding with allowable errors},
-  author={Bloom, Burton H},
-  journal={Communications of the ACM},
-  volume={13},
-  number={7},
-  pages={422--426},
-  year={1970},
-  publisher={ACM New York, NY, USA}
+  author  = {Bloom, Burton H.},
+  title   = {Space/time trade-offs in hash coding with allowable errors},
+  journal = {Communications of the {ACM}},
+  year    = {1970},
+  volume  = {13},
+  number  = {7},
+  pages   = {422--426},
+  doi     = {10.1145/362686.362692}
 }
 
 @article{ls,
-  title={Logan: planetary-scale genome assembly surveys life’s diversity},
-  author={Chikhi, Rayan and Lemane, T{\'e}o and Loll-Krippleber, Rapha{\"e}l and Montoliu-Nerin, Merc{\`e} and Raffestin, Brice and Camargo, Antonio Pedro and Miller, Carson J and Fiamenghi, Mateus Bernabe and Agustinho, Daniel Paiva and Majidian, Sina and others},
-  journal={bioRxiv},
-  pages={2024--07},
-  year={2025}
+  author  = {Chikhi, Rayan and Lemane, T{\'e}o and Loll-Krippleber,
+             Rapha{\"e}l and Montoliu-Nerin, Merc{\`e} and Raffestin, Brice
+             and Camargo, Antonio Pedro and Miller, Carson J. and Fiamenghi,
+             Mateus Bernabe and Agustinho, Daniel Paiva and Majidian, Sina
+             and Autric, Greg and Hugues, Maxime and Lee, Junkyoung and
+             Faure, Roland and Curry, Kristen D. and {Moura de Sousa},
+             Jorge A. and Rocha, Eduardo P. C. and Koslicki, David and
+             Medvedev, Paul and Gupta, Purav and Shen, Jessica and
+             Morales-Tapia, Alejandro and Sihuta, Kate and Roy, Peter J.
+             and Brown, Grant W. and Edgar, Robert C. and Korobeynikov,
+             Anton and Steinegger, Martin and Lareau, Caleb A. and
+             Peterlongo, Pierre and Babaian, Artem},
+  title   = {Logan: Planetary-Scale Genome Assembly Surveys Life's Diversity},
+  journal = {bioRxiv},
+  year    = {2024},
+  doi     = {10.1101/2024.07.30.605881}
 }
 
 @article{marchet2024,
@@ -122,24 +123,28 @@
   title   = {Advances in colored $k$-mer sets: essentials for the curious},
   journal = {arXiv preprint arXiv:2409.05214},
   year    = {2024},
-  doi     = {10.48550/arXiv.2409.05214},
-  url     = {https://arxiv.org/abs/2409.05214}
+  doi     = {10.48550/arXiv.2409.05214}
 }
 
-@article{karasikov2024,
-  author  = {Karasikov, Mikhail and Mustafa, Harun and Danciu, Daniel and others},
-  title   = {Indexing all life's known biological sequences},
-  journal = {bioRxiv},
-  year    = {2024},
-  doi     = {10.1101/2020.10.01.322164}
+@article{karasikov2025,
+  title={Efficient and accurate search in petabase-scale sequence repositories},
+  author={Karasikov, Mikhail and Mustafa, Harun and Danciu, Daniel and Kulkov, Oleksandr and Zimmermann, Marc and Barber, Christopher and R{\"a}tsch, Gunnar and Kahles, Andr{\'e}},
+  journal={Nature},
+  volume={647},
+  number={8091},
+  pages={1036--1044},
+  year={2025},
+  publisher={Nature Publishing Group UK London}
 }
 
 @article{fulgor,
-  author  = {Fan, Jason and Khan, Jamshed and Pibiri, Giulio Ermanno and Patro, Rob},
-  title   = {Fulgor: a fast and compact $k$-mer index for large-scale matching and color queries},
+  author  = {Fan, Jason and Khan, Jamshed and Singh, Noor Pratap and
+             Pibiri, Giulio Ermanno and Patro, Rob},
+  title   = {Fulgor: a fast and compact $k$-mer index for large-scale
+             matching and color queries},
   journal = {Algorithms for Molecular Biology},
+  year    = {2024},
   volume  = {19},
   pages   = {3},
-  year    = {2024},
   doi     = {10.1186/s13015-024-00251-9}
 }
