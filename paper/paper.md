@@ -159,7 +159,7 @@ then validates sample paths, available disk space and memory, and emits a
 ready-to-execute pipeline script; the resulting report is reviewed before
 committing to the build. `apply` reads the definition files and invokes
 `kmindex` to construct the index. Finally, `query` searches the built index
-against user-provided sequences and returns ranked results.](https://notes.inria.fr/uploads/upload_77e9b33f96768c32594e124ee44b0382.png)
+against user-provided sequences and returns ranked results.](figures/workflow.png)
 
 <!-- TODO before submission: update the figure to also show index update, and commit the final figure as a local file in the repository (JOSS requires figures committed to the repo, not referenced via an external URL). -->
 
