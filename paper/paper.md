@@ -184,7 +184,7 @@ output index size, build wall time, and query throughput.
 
 # Availability and documentation
 
-`kmhelpers` is released under the GNU General Public License v3.0 and is available at <https://gitlab.inria.fr/omicfinder/kmhelpers>. The full documentation is available at XXX.
+`kmhelpers` is released under the GNU General Public License v3.0 and is available at <https://github.com/sebllns/kmhelpers>. The full documentation is available at <https://sebllns.github.io/kmhelpers/>.
 
 
 # Acknowledgements
