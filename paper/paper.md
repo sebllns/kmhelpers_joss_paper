@@ -31,7 +31,7 @@ $k$-mers (words of length $k$) it contains; a query then reports the set of
 samples containing each queried $k$-mer. Building such an index over many samples
 is not a single operation but a chain of interdependent steps, and each step
 demands specialist knowledge: sizing each Bloom filter to its sample, configuring
-the third-party components used internally by `kmindex` (such as the `fimpera`
+the third-party components used internally by `kmindex` (such as the `findere` [@robidou2021findere]
 approximate-membership layer), distributing data and computation, bounding peak
 RAM, and grouping samples into sub-indexes so that the final index stays small
 without slowing queries. An error at any step can invalidate downstream results,
