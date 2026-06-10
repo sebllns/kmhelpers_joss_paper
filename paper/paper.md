@@ -92,15 +92,12 @@ is designed for efficient querying of large sequence collections.
 
 `kmhelpers` does not compete with any of these approaches at the algorithmic
 level. Its contribution is orthogonal and, importantly, is not merely a pipeline
-script: the difficulty here lies not in chaining steps (any workflow manager or
-scripting language can do that) but in the individual components and how they are
+script: the difficulty here lies not in chaining steps but in the individual components and how they are
 orchestrated. `kmhelpers` implements the decisions a `kmindex` expert would
 otherwise make by hand: `profile` computes Bloom filter sizes and
 sample-to-sub-index assignments that minimise total index size under a
 false-positive-rate constraint; `plan` estimates disk and memory requirements
-before any build starts; and `registry` federates independently built
-sub-indexes into one logical index. No dedicated automation layer of this kind
-existed for `kmindex` prior to `kmhelpers`.
+before any build starts; and `registry` federates independently built sub-indexes into one logical index. No dedicated automation layer of this kind existed for `kmindex` prior to `kmhelpers`.
 
 
 # Design and Implementation
@@ -121,14 +118,13 @@ suffice: the ideal case, where one file is opened per query and one matrix row
 gives the answer across all $n$ samples. In practice, sample sizes differ by
 several orders of magnitude. Sizing every BF for the largest sample wastes
 enormous storage; giving each sample its own single-column matrix minimises
-storage but forces a query to open up to $n$ files (potentially millions).
+storage but forces a query to open $n$ files (potentially millions).
 `kmhelpers` takes the middle ground: the user fixes the maximum number of
-sub-indexes, and the `profile` step chooses the per-sub-index BF size that
-minimises total index size under that constraint.
+sub-indexes, and the `profile` step chooses the per-sub-index BF size that minimises total index size under that constraint, and it distributes input samples to their respective sub-index.
 
 ## The pipeline
 
-`kmhelpers` exposes the index lifecycle as a sequence of commands:
+`kmhelpers` exposes the index lifecycle as a sequence of commands, illustrated Figure 1:
 
 - **`list`** — recursively discovers all samples in a given directory and counts
   each sample's distinct $k$-mers using `ntCard` [@mohamadi2017] (unless the
@@ -159,7 +155,7 @@ then validates sample paths, available disk space and memory, and emits a
 ready-to-execute pipeline script; the resulting report is reviewed before
 committing to the build. `apply` reads the definition files and invokes
 `kmindex` to construct the index. Finally, `query` searches the built index
-against user-provided sequences and returns ranked results.](figures/workflow.png)
+against user-provided sequences and returns ranked results. TODO: remove redundant info already in the main text](figures/workflow.png)
 
 <!-- TODO before submission: update the figure to also show index update, and commit the final figure as a local file in the repository (JOSS requires figures committed to the repo, not referenced via an external URL). -->
 
