@@ -164,7 +164,7 @@ while remaining flexible enough for large-scale production use.
 
 # Applying `kmhelpers` to the ``Tree of Life'' dataset
 
-As part of the broader ``Earth Biogenome Project'' [@gupta2022earth], the ``Darwin Tree of Life Project'' [@darwinTol] aims to deliver at-scale genome sequences of unprecedented quality for Britain and Ireland. It collects robustly identified specimens, performs sequencing, and generates high-quality, curated public assemblies.
+As part of the broader "Earth Biogenome Project" [@gupta2022earth], the "Darwin Tree of Life Project" [@darwinTol] aims to deliver at-scale genome sequences of unprecedented quality for Britain and Ireland. It collects robustly identified specimens, performs sequencing, and generates high-quality, curated public assemblies.
 
 This project is a perfect use case for applying `kmhelpers`: from input data -- here a mixture of raw sequencing reads and assembled genomes -- to a final index powering a CLI search engine (currently private; XXX).
 
