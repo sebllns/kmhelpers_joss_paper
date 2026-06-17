@@ -147,7 +147,7 @@ Once an index is built, `kmhelpers` also answers queries (`query`). Multi-step
 workflows can be described as declarative YAML pipelines (`pipeline`) and executed
 in a single command.
 
-![Overview of the `kmhelpers` workflow. `list` enumerates sample files and counts $k$-mers; `profile` analyses the count distributions to assign each sample to a Bloom-filter span and recommend index groupings. Both outputs feed into `compose`, which generates YAML index definition files. `plan` then validates sample paths, available disk space and memory, and emits a ready-to-execute pipeline script; the resulting report is reviewed before committing to the build. `apply` reads the definition files and invokes `kmindex` to construct the index. Finally, `query` searches the built index against user-provided sequences and returns ranked results. TODO: remove redundant info already in the main text](figures/workflow.png)
+![Overview of the `kmhelpers` workflow](figures/workflow.png)
 
 <!-- TODO before submission: update the figure to also show index update, and commit the final figure as a local file in the repository (JOSS requires figures committed to the repo, not referenced via an external URL). -->
 
@@ -168,7 +168,7 @@ As part of the broader "Earth Biogenome Project" [@gupta2022earth], the "Darwin 
 
 This project is a perfect use case for applying `kmhelpers`: from input data -- here a mixture of raw sequencing reads and assembled genomes -- to a final index powering a CLI search engine (currently private; XXX).
 
-Concretely, `kmhelpers` was applied to XXX samples. The index is continuously updated as new sequencing data are progressively added.
+Concretely, `kmhelpers` was applied to 7394 samples. The index is continuously updated as new sequencing data are progressively added.
 
 # Availability and documentation
 
