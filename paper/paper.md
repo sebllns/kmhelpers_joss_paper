@@ -93,7 +93,7 @@ covering all CLI functionality. Together, the declarative YAML index-definition 
 ## Applying `kmhelpers` to the "Tree of Life" dataset
 As part of the broader "Earth Biogenome Project" [@gupta2022earth], the "Darwin Tree of Life Project" [@darwinTol] aims to deliver at-scale genome sequences of unprecedented quality for Britain and Ireland. It collects robustly identified specimens, performs sequencing, and generates high-quality, curated public assemblies.
 
-This project is a perfect use case for applying `kmhelpers`: from input data -- here a mixture of raw sequencing reads and assembled genomes -- to a final index powering a CLI search engine.
+This project is a perfect use case for applying `kmhelpers`: from input data -- here a mixture of raw sequencing reads and assembled genomes -- to a final index powering a CLI search engine. The indexation of the "Darwin Tree of Life Project" also influenced the development of `kmhelpers`.
 
 Concretely, `kmhelpers` was applied to 7394 samples. The index is continuously updated as new sequencing data are progressively added.
 
