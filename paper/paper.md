@@ -93,13 +93,13 @@ covering all CLI functionality. Together, the declarative YAML index-definition 
 ## Applying `kmhelpers` to the "Tree of Life" dataset
 As part of the broader "Earth Biogenome Project" [@gupta2022earth], the "Darwin Tree of Life Project" [@darwinTol] aims to deliver at-scale genome sequences of unprecedented quality for Britain and Ireland. It collects robustly identified specimens, performs sequencing, and generates high-quality, curated public assemblies.
 
-This project is a perfect use case for applying `kmhelpers`: from input data -- here a mixture of raw sequencing reads and assembled genomes -- to a final index powering a CLI search engine (currently private; XXX).
+This project is a perfect use case for applying `kmhelpers`: from input data -- here a mixture of raw sequencing reads and assembled genomes -- to a final index powering a CLI search engine.
 
 Concretely, `kmhelpers` was applied to 7394 samples. The index is continuously updated as new sequencing data are progressively added.
 
 ## Using `kmhelpers` for updating the Logan-Search search engine
 
-The Logan-Search search engine [@reftodo] indexes approximately 50 PB of sequence data from SRA [@reftodo]. Since its creation, the SRA database size has doubled. The index of Logan-Search will be updated using `kmhelper`, also optimizing the sub-indexes design. 
+The Logan-Search search engine [@ls] indexes approximately 50 PB of sequence data from SRA [@sra]. Since its creation, the SRA database size has doubled. The index of Logan-Search will be updated using `kmhelper`, also optimizing the sub-indexes design. 
 
 # Availability and documentation
 
@@ -108,13 +108,10 @@ The Logan-Search search engine [@reftodo] indexes approximately 50 PB of sequenc
 
 # Acknowledgements
 
-The authors thank Téo Lemane for developing `kmindex` and for his
-responsiveness in addressing feature requests and issues raised during the development of `kmhelpers`. We acknowledge the GenOuest core facility (<https://www.genouest.org>) for providing the computing infrastructure. The work was funded by the Inria Challenge "OmicFinder" (<https://project.inria.fr/omicfinder/>), and by the state funding managed by the French National Research Agency under the France 2030 program [ANR-22-PEAE-0005].
-
+The authors thank Téo Lemane for developing `kmindex` and for his support in addressing feature requests and issues raised during the development of `kmhelpers`. We acknowledge the GenOuest core facility (<https://www.genouest.org>) for providing the computing infrastructure. The work was funded by the Inria Challenge "OmicFinder" (<https://project.inria.fr/omicfinder/>), and by the state funding managed by the French National Research Agency under the France 2030 program [ANR-22-PEAE-0005].
 
 # AI Usage Disclosure
 
-AI assistance was used for constrained tasks (drafting, editing, code suggestions) under strict human review at every stage. AI provider used: Claude (Anthropic, 2025).
-
+AI assistance was used for constrained tasks (code suggestions and drafting the paper) under strict human review at every stage. AI provider used: Claude (Anthropic, 2025).
 
 # References
