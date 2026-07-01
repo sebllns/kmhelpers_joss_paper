@@ -79,7 +79,7 @@ several orders of magnitude. Sizing every BF for the largest sample wastes enorm
 
 Once an index is built, `kmhelpers` also answers queries (`query`). Multi-step workflows can be described as declarative YAML pipelines (`pipeline`) and executed in a single command.
 
-![Overview of the `kmhelpers` workflow](figures/workflow.png)
+![Overview of the `kmhelpers` workflow](figures/workflow_V2.pdf)
 
 <!-- TODO before submission: update the figure to also show index update, and commit the final figure as a local file in the repository (JOSS requires figures committed to the repo, not referenced via an external URL). -->
 
