@@ -11,13 +11,18 @@ tags:
 authors:
   - name: Sébastien Bellenous
     affiliation: 1
+  - name: Kamil Jaron
+    orcid: 0000-0003-1470-5450
+    affiliation: 2
   - name: Pierre Peterlongo
     orcid: 0000-0003-0776-6407
     affiliation: 1
 affiliations:
   - name: Genscale, Univ. Rennes, Inria, CNRS, IRISA - UMR 6074, Rennes, F-35000 France
     index: 1
-date: 2026-06-03
+  - name: Tree of Life Programme, Wellcome Sanger Institute, Hinxton, UK
+    index: 2
+date: 2026-07-06
 bibliography: paper.bib
 ---
 
@@ -31,29 +36,26 @@ approximate-membership layer), distributing data and computation, bounding peak 
 We present `kmhelpers`, an open-source Python toolkit that automates this entire workflow for indexes built with `kmindex` [@lemane2024]. It hides the technical decisions listed above behind a command-line interface (CLI) and a matching Python API that cover every stage of the $k$-mer index lifecycle, from raw samples up to queries, including the federation of independently built indexes into
 a single queryable resource.
 
-
 # Statement of Need
 
-$k$-mer-based sequence databases built with tools such as `kmindex` [@lemane2024] and `kmtricks` [@lemane2022] answer queries on large-scale samples in genomics, metagenomics, and population studies. They were recently used to index 50 petabases of raw sequencing data [@ls]. Yet a wide gap separates having the
-indexing software installed from running a reproducible, end-to-end,
-size-optimised indexing workflow.
+$k$-mer-based sequence databases built with tools such as `kmindex` [@lemane2024] and `kmtricks` [@lemane2022] answer queries on large-scale samples in genomics, metagenomics, and population studies. They were recently used to index 50 petabases of raw sequencing data [@ls]. Yet a wide gap separates having the indexing software installed from running a reproducible, end-to-end, size-optimized indexing workflow.
 
-Crossing that gap currently requires a user to master, simultaneously: Bloom filter sizing as a function of each sample's $k$-mer cardinality; the configuration of internal components of `kmindex`; the distribution of data and build jobs across the available compute; the control of peak memory; and the
-partitioning of samples into sub-indexes that balances index size against query speed. Only specialists hold all of this knowledge at once.
+Crossing that gap currently requires a user to master, simultaneously: Bloom filter sizing as a function of each sample's $k$-mer cardinality (number of $k$-mers to be indexed per sample); configuring internal components of `kmindex`; distributing data and computations; controlling the peak memory; and partitioning the samples into sub-indexes that balance index size against query speed. This expertise is not required to obtain *a* functional index but to obtain an *efficient* one that minimizes index size and maximizes query speed under a fixed false-positive-rate constraint.
 
-`kmhelpers` removes that barrier. It makes the complete process of building, updating, and querying a `kmindex` search engine accessible to any group that holds a large, evolving genomic dataset (research teams, sequencing platforms, hospitals, or data-production centres) whether the resulting index is kept private or shared. This opens to non-specialists both the creation and maintenance of private indexes and the contribution of sub-indexes to larger, federated search engines.
+`kmhelpers` removes that barrier. It makes the complete process of building, updating, and querying a `kmindex` search engine accessible to any group (research teams, sequencing platforms, hospitals, or data-production centers) that holds a potentially large genomic dataset, whether the resulting index is kept private or shared, without repeated manual re-optimization as the dataset grows. This opens to non-specialists both the creation and maintenance of optimized indexes.
 
-Formally, the input is a set $\mathcal{S}=\{S_1, \dots, S_n\}$ of $n$ genomic samples of various sizes; each $S_i$ is either a raw sequencing dataset or assembled sequences. The output is a `kmindex` index subject to two user-defined limits: (1) the maximum allowed false-positive rate, and (2) the maximum number of sub-indexes, each a file storing a set of BFs as a matrix. `kmhelpers` orchestrates every step between input and output, automating the parametrisation
+Indexes are rarely static: as new samples accumulate, they must be regularly updated. `kmhelpers` therefore also offers an update feature for easily adding new samples to an existing index.
+
+Formally, the input is a set $\mathcal{S}=\{S_1, \dots, S_n\}$ of $n$ genomic samples of various sizes; each $S_i$ is either a raw sequencing dataset or assembled sequences. The output is a `kmindex` index subject to two user-defined limits: (1) the maximum allowed false-positive rate, and (2) the maximum number of sub-indexes, each a file storing a set of BFs as a matrix. `kmhelpers` orchestrates every step between input and output, automating the parametrization
 and the data distribution.
 
 # State of the Field
 
-Several tools tackle large-scale sequence search with $k$-mer-based data structures. `BIGSI` [@bradley2019] and `COBS` [@bingmann2019] use compressed Bloom filter matrices to answer presence/absence queries across collections of sequencing experiments. `HowDeSBT` [@harris2019] and `Mantis` [@pandey2018] rely on sequence Bloom trees and counting quotient filters, respectively. More recent colored-$k$-mer indexes such as `MetaGraph` [@karasikov2025] and `Fulgor` [@fulgor] push scalability further; see [@marchet2024] for a survey. `kmindex`, which
+Several tools tackle large-scale sequence search with $k$-mer-based data structures. `BIGSI` [@bradley2019] and `COBS` [@bingmann2019] use compressed Bloom-filter matrices to answer presence/absence queries across collections of sequencing experiments. `HowDeSBT` [@harris2019] and `Mantis` [@pandey2018] rely on sequence Bloom trees and counting quotient filters, respectively. More recent colored-$k$-mer indexes such as `MetaGraph` [@karasikov2025] and `Fulgor` [@fulgor] push scalability further; see [@marchet2024] for a survey. `kmindex`, which
 `kmhelpers` wraps, builds on the `kmtricks` [@lemane2022] counting pipeline and
 is designed for efficient querying of large sequence collections.
 
-`kmhelpers` does not compete with any of these approaches at the algorithmic level. Its contribution is orthogonal and, importantly, is not merely a pipeline script. The difficulty here lies not in chaining steps but in the individual components and how they are
-orchestrated. `kmhelpers` implements the decisions a `kmindex` expert would otherwise make by hand: `profile` computes Bloom filter sizes and sample-to-sub-index assignments that minimise total index size under a false-positive-rate constraint; `plan` estimates disk and memory requirements before any build starts; and `registry` federates independently built sub-indexes into one logical index. No dedicated automation layer of this kind existed for `kmindex` prior to `kmhelpers`.
+`kmhelpers` does not compete with any of these approaches at the algorithmic level. Its contribution lies in correctly parametrizing `kmindex`'s individual components and orchestrating them into a single, size-optimized workflow. `kmhelpers` implements the decisions a `kmindex` expert would otherwise make by hand: `profile` computes Bloom filter sizes and sample-to-sub-index assignments that minimize total index size under a false-positive-rate constraint; `plan` estimates disk and memory requirements before any build starts; and `registry` federates independently built sub-indexes into one logical index. No dedicated automation layer of this kind existed for `kmindex` prior to `kmhelpers`.
 
 # Software design
 
@@ -62,7 +64,7 @@ orchestrated. `kmhelpers` implements the decisions a `kmindex` expert would othe
 A Bloom-filter index stores all BFs of the same size as a single (row-major) matrix in one file. In such a matrix each column is one BF (one sample) and each row records the presence (1) or absence (0) of a $k$-mer across all samples sharing that filter size, assuming a common hash function. A complete index is therefore a set of such matrices, each one a *sub-index* holding all BFs of a given size.
 
 The difficulty is that each BF size must match the number of items it stores, here the distinct $k$-mers of a sample. If all samples had the same number of distinct $k$-mers, every BF would share one size and a single matrix would suffice. This is the ideal case, where only one file is opened per query and one matrix row gives the answer across all $n$ samples. In practice, sample sizes differ by
-several orders of magnitude. Sizing every BF for the largest sample wastes enormous storage. Giving each sample its own single-column matrix minimises storage but forces a query to open $n$ files (potentially millions), severly slowing down queries. `kmhelpers` takes the middle ground: the user fixes the maximum number of sub-indexes, and the `profile` step chooses the per-sub-index BF size that minimises total index size under that constraint, before distributing each input sample to its respective sub-index.
+several orders of magnitude. Sizing every BF for the largest sample wastes enormous storage. Giving each sample its own single-column matrix minimizes storage but forces a query to open $n$ files (potentially millions), severely slowing down queries. `kmhelpers` takes the middle ground: the user fixes the maximum number of sub-indexes, and the `profile` step chooses the per-sub-index BF size that minimizes total index size under that constraint, before distributing each input sample to its respective sub-index.
 
 ## The pipeline
 
@@ -77,6 +79,8 @@ several orders of magnitude. Sizing every BF for the largest sample wastes enorm
   [@regnier2026].
 - **`registry`** — registers several sub-indexes (built locally or anywhere accessible) into one logical index, redirecting each query to the relevant sub-indexes at query time.
 
+For ease of use, steps `list`, `profile`, and `compose` can be grouped under a single command named `design`, and steps `plan` and `apply` can be grouped under the `build` command.
+
 Once an index is built, `kmhelpers` also answers queries (`query`). Multi-step workflows can be described as declarative YAML pipelines (`pipeline`) and executed in a single command.
 
 ![Overview of the `kmhelpers` workflow](figures/workflow_V2.pdf)
@@ -85,26 +89,25 @@ Once an index is built, `kmhelpers` also answers queries (`query`). Multi-step w
 
 ## Implementation
 
-`kmhelpers` is implemented in Python ($\geq 3.8$) and distributed via Conda, which installs its bioinformatics dependencies (`kmindex`, `ntCard`) automatically. The CLI is built with Click [@click], and the package exposes a public Python API
+`kmhelpers` is implemented in Python ($\geq 3.8$) and distributed via Conda, which installs its bioinformatics dependencies (`kmindex`, `ntCard`) automatically. The CLI is built with `Click` [@click], and the package exposes a public Python API
 covering all CLI functionality. Together, the declarative YAML index-definition format and the `plan`/`apply` separation make $k$-mer indexing workflows accessible to researchers who are not experts in the underlying data structures, while remaining flexible enough for large-scale production use.
 
 # Research impact statement
 
 ## Applying `kmhelpers` to the "Tree of Life" dataset
-As part of the broader "Earth Biogenome Project" [@gupta2022earth], the "Darwin Tree of Life Project" [@darwinTol] aims to deliver at-scale genome sequences of unprecedented quality for Britain and Ireland. It collects robustly identified specimens, performs sequencing, and generates high-quality, curated public assemblies.
 
-This project is a perfect use case for applying `kmhelpers`: from input data -- here a mixture of raw sequencing reads and assembled genomes -- to a final index powering a CLI search engine. The indexation of the "Darwin Tree of Life Project" also influenced the development of `kmhelpers`.
+In phase two, the Earth Biogenome Project aims to sequence reference genomes of 150,000 family representatives across the tree of life over the next four years [@blaxter2025]. Tree of Life Programme at the Wellcome Sanger Institute is one of the major contributors to this effort with large sequencing projects, such as Darwin Tree of Life for all species found in Britain and Ireland [@darwinTol]. To date, Tree of Life has already released more than 4,000 genomes and is in the process of sequencing an additional 3,000. The project is based on robustly identified specimens, but occasionally long-read datasets and chromatin capture (HiC) sequencing do not match, which might happen due to cryptic species, sequencing hybrid specimens, or mistakes in sample handling either by the collector or during the sequencing process. These cases we refer to as sample swaps.
 
-Concretely, `kmhelpers` was applied to 7394 samples. The index is continuously updated as new sequencing data are progressively added.
+This project is a perfect use case for applying `kmhelpers`: from input data — here a mixture of raw sequencing reads and assembled genomes — to a final index powering a CLI search engine that is now being used for identification of sample swaps (matching sequencing libraries) at scale. Concretely, `kmhelpers` was applied to 7,394 samples and this project also helped shape the design of `kmhelpers` itself.
+The index is continuously updated as new sequencing data are progressively added, which is essential for sustaining detection of sample swaps.
 
 ## Using `kmhelpers` for updating the Logan-Search search engine
 
-The Logan-Search search engine [@ls] indexes approximately 50 PB of sequence data from SRA [@sra]. Since its creation, the SRA database size has doubled. The index of Logan-Search will be updated using `kmhelper`, also optimizing the sub-indexes design. 
+The Logan-Search search engine [@ls] indexes approximately 50 petabases of sequence data from SRA [@sra]. Since its creation, the SRA database size has doubled. The index of Logan-Search will be updated using `kmhelpers`, also optimizing the sub-indexes design.
 
 # Availability and documentation
 
 `kmhelpers` is released under the GNU General Public License v3.0 and is available at <https://github.com/sebllns/kmhelpers>. The full documentation is available at <https://sebllns.github.io/kmhelpers/>.
-
 
 # Acknowledgements
 
