@@ -75,13 +75,12 @@ several orders of magnitude. Sizing every BF for the largest sample wastes enorm
 - **`compose`** — assigns each sample to its sub-index and generates the *files-of-files* describing the data origin of each sub-index.
 - **`plan`** — validates sample files, available disk space, and memory upfront, and emits ready-to-execute pipeline scripts.
 - **`apply`** — builds all sub-indexes by invoking `kmindex`, with span-level and name-level filtering.
-- **`compress`** — optional Zstd-based block compression of the index
-  [@regnier2026].
-- **`registry`** — registers several sub-indexes (built locally or anywhere accessible) into one logical index, redirecting each query to the relevant sub-indexes at query time.
 
 For ease of use, steps `list`, `profile`, and `compose` can be grouped under a single command named **`design`**, and steps `plan` and `apply` can be grouped under the **`build`** command.
 
-Once an index is built, `kmhelpers` also answers queries (`query`). Multi-step workflows can be described as declarative YAML pipelines (`pipeline`) and executed in a single command.
+Once an index is built, `kmhelpers` also answers queries (`query`). Multi-step workflows can be described as declarative YAML pipelines (**`pipeline`**) and executed in a single command.
+
+An additional command, **`registry`**, lets users register several distinct indexes (built locally or hosted anywhere accessible) into one logical index, redirecting each query to all registered indexes at query time.
 
 ![Overview of the `kmhelpers` workflow](figures/workflow_V2.pdf)
 
