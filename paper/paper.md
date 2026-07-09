@@ -85,8 +85,6 @@ An additional command, **`registry`**, lets users register several distinct inde
 
 ![Overview of the `kmhelpers` workflow](figures/workflow_V2.pdf)
 
-<!-- TODO before submission: update the figure to also show index update, and commit the final figure as a local file in the repository (JOSS requires figures committed to the repo, not referenced via an external URL). -->
-
 ## Implementation
 
 `kmhelpers` is implemented in Python ($\geq 3.8$) and distributed via Conda, which installs its bioinformatics dependencies (`kmindex`, `ntCard`) automatically. The CLI is built with `Click` [@click], and the package exposes a public Python API
