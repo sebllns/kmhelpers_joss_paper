@@ -10,6 +10,7 @@ tags:
   - Bloom filters
 authors:
   - name: Sébastien Bellenous
+    orcid: 0009-0002-8429-284X
     affiliation: 1
   - name: Kamil S. Jaron
     orcid: 0000-0003-1470-5450
@@ -68,7 +69,7 @@ several orders of magnitude. Sizing every BF for the largest sample wastes enorm
 
 ## The pipeline
 
-`kmhelpers` exposes the index lifecycle as a sequence of commands, illustrated Figure 1:
+`kmhelpers` exposes the index lifecycle as a sequence of commands, as illustrated in Figure 1:
 
 - **`list`** — recursively discovers all samples in a given directory and counts each sample's distinct $k$-mers using `ntCard` [@mohamadi2017] (unless the counts are provided by the user).
 - **`profile`** — determines the best set of sub-index BF sizes given the user-defined maximum number of sub-indexes and target false-positive rate.
