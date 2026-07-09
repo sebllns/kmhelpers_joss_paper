@@ -11,7 +11,7 @@ tags:
 authors:
   - name: Sébastien Bellenous
     affiliation: 1
-  - name: Kamil Jaron
+  - name: Kamil S. Jaron
     orcid: 0000-0003-1470-5450
     affiliation: 2
   - name: Pierre Peterlongo
@@ -20,7 +20,7 @@ authors:
 affiliations:
   - name: Genscale, Univ. Rennes, Inria, CNRS, IRISA - UMR 6074, Rennes, F-35000 France
     index: 1
-  - name: Tree of Life Programme, Wellcome Sanger Institute, Hinxton, UK
+  - name: Tree of Life, Wellcome Sanger Institute, Hinxton CB10 1SA, UK
     index: 2
 date: 2026-07-06
 bibliography: paper.bib
@@ -110,7 +110,7 @@ The Logan-Search search engine [@ls] indexes approximately 50 petabases of seque
 
 # Acknowledgements
 
-The authors thank Téo Lemane for developing `kmindex` and for his support in addressing feature requests and issues raised during the development of `kmhelpers`. We acknowledge the GenOuest core facility (<https://www.genouest.org>) for providing the computing infrastructure. The work was funded by the Inria Challenge "OmicFinder" (<https://project.inria.fr/omicfinder/>), and by the state funding managed by the French National Research Agency under the France 2030 program [ANR-22-PEAE-0005].
+The authors thank Téo Lemane for developing `kmindex` and for his support in addressing feature requests and issues raised during the development of `kmhelpers`. We acknowledge the GenOuest core facility (<https://www.genouest.org>) for providing the computing infrastructure. The work was funded by the Inria Challenge "OmicFinder" (<https://project.inria.fr/omicfinder/>), and by the state funding managed by the French National Research Agency under the France 2030 program [ANR-22-PEAE-0005]. KSJ was funded by Wellcome Trust 220540/Z/20/A.
 
 # AI Usage Disclosure
 
